@@ -14,14 +14,14 @@ import { getDate, calculateTime } from "../utils/dateSupportFuncs";
 import CallIcon from "./CallIcon";
 import Pagination from "@mui/material/Pagination";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import { setThreads } from "../redux/threadsSlice";
+import { setActivities } from "../redux/activitiesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import BasicModal from "./Modal";
 
 export default function ArchivedFeed() {
   const dispatch = useDispatch();
-  const listOfThreads = useSelector((state) => state.threadsData.listOfThreads);
+  const listOfActivities = useSelector((state) => state.activitiesData.listOfActivities);
   const [page, setPage] = useState(1);
   const [callId, setCallId] = useState(null);
 
@@ -30,7 +30,7 @@ export default function ArchivedFeed() {
   const handleClose = () => setOpen(false);
 
   const unarchive = (id) => {
-    let tempList = [...listOfThreads];
+    let tempList = [...listOfActivities];
     tempList = tempList.map((call) => {
       if (call.id === id) {
         const tempObj = Object.assign({}, call);
@@ -39,10 +39,10 @@ export default function ArchivedFeed() {
       }
       return call;
     });
-    dispatch(setThreads(tempList));
+    dispatch(setActivities(tempList));
   };
 
-  const tempData = [...listOfThreads];
+  const tempData = [...listOfActivities];
   const archivedCalls = tempData.filter((calls) => calls.is_archived === true);
   const totalPages = Math.ceil(archivedCalls.length / 6);
   const totalCalls = archivedCalls.length;
@@ -53,13 +53,13 @@ export default function ArchivedFeed() {
       <BasicModal open={open} handleClose={handleClose} callId={callId} />
       {pageData &&
         pageData.map((call) => (
-          <Fragment>
+          <Fragment key={call.id}>
             <ListItem
               alignItems="flex-start"
               key={call.id}
               sx={{ height: "80px" }}
             >
-              <ListItemIcon alignItems="center">
+              <ListItemIcon>
                 <CallIcon callType={call.call_type} />
               </ListItemIcon>
               <ListItemText

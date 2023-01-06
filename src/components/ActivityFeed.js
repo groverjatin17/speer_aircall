@@ -15,13 +15,13 @@ import CallIcon from "./CallIcon";
 import Pagination from "@mui/material/Pagination";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ArchiveIcon from "@mui/icons-material/Archive";
-import { setThreads } from "../redux/threadsSlice";
+import { setActivities } from "../redux/activitiesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import BasicModal from "./Modal";
 
 export default function ActivityFeed() {
   const dispatch = useDispatch();
-  const listOfThreads = useSelector((state) => state.threadsData.listOfThreads);
+  const listOfActivities = useSelector((state) => state.activitiesData.listOfActivities);
   const [page, setPage] = useState(1);
   const [callId, setCallId] = useState(null);
 
@@ -30,7 +30,7 @@ export default function ActivityFeed() {
   const handleClose = () => setOpen(false);
 
   const archive = (id) => {
-    let tempList = [...listOfThreads];
+    let tempList = [...listOfActivities];
     tempList = tempList.map((call) => {
       if (call.id === id) {
         const tempObj = Object.assign({}, call);
@@ -39,10 +39,10 @@ export default function ActivityFeed() {
       }
       return call;
     });
-    dispatch(setThreads(tempList));
+    dispatch(setActivities(tempList));
   };
 
-  const tempData = [...listOfThreads];
+  const tempData = [...listOfActivities];
   const unarchivedCalls = tempData.filter(
     (calls) => calls.is_archived === false
   );
@@ -61,7 +61,7 @@ export default function ActivityFeed() {
               key={call.id}
               sx={{ height: "80px" }}
             >
-              <ListItemIcon alignItems="center">
+              <ListItemIcon>
                 <CallIcon callType={call.call_type} />
               </ListItemIcon>
               <ListItemText

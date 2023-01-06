@@ -20,10 +20,8 @@ const style = {
 };
 
 export default function BasicModal({ open, handleClose, callId }) {
-  const listOfThreads = useSelector((state) => state.threadsData.listOfThreads);
-  const callDetails = listOfThreads.find((call) => call.id === callId);
-
-  console.log("callDetails: ", callDetails);
+  const listOfActivities = useSelector((state) => state.activitiesData.listOfActivities);
+  const callDetails = listOfActivities.find((call) => call.id === callId);
 
   return (
     <div>

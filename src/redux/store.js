@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import threadsReducer from "./threadsSlice";
+import activitiesReducer from "./activitiesSlice";
 
 export const store = configureStore({
   reducer: {
-    threadsData: threadsReducer,
+    activitiesData: activitiesReducer,
   },
 });
